@@ -4,7 +4,13 @@ homeassistant:
   unit_system: metric
   country: IR
 
-# تنظیمات HTTP برای Railway (رفع خطای پروکسی)
+  # تعریف روش‌های ورود (auth providers)
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+      api_password: !secret api_password
+
+# تنظیمات HTTP برای Railway (رفع خطای پروکسی و callback)
 http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -24,13 +30,13 @@ recorder:
   auto_purge: true
   purge_keep_days: 7
 
-# مثال MQTT (اختیاری، اگر بروکر ابری داری)
+# نمونه MQTT (اختیاری، اگر بروکر ابری داری)
 mqtt:
   broker: !secret mqtt_broker
   username: !secret mqtt_user
   password: !secret mqtt_pass
 
-# نمونه Automation ساده
+# نمونه Automation ساده برای تست
 automation:
   - alias: "Test Light Toggle"
     trigger:
