@@ -4,45 +4,22 @@ homeassistant:
   unit_system: metric
   country: IR
 
-  # تعریف روش‌های ورود (auth providers)
   auth_providers:
     - type: homeassistant
-    - type: legacy_api_password
-      api_password: !secret api_password
+    # اگر می‌خواهی از legacy_api_password استفاده کنی، باید secrets.yaml را تنظیم کنی
+    # - type: legacy_api_password
+    #   api_password: !secret api_password
 
-# تنظیمات HTTP برای Railway (رفع خطای پروکسی و callback)
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 100.64.0.0/10
 
-# فعال‌سازی اپ موبایل
 mobile_app:
-
-# فعال‌سازی API برای دسترسی اپ‌ها و سرویس‌ها
 api:
 
-# پایگاه داده Recorder (برای ذخیره‌سازی پایدار)
-# مقدار db_url را از طریق secrets.yaml یا ENV در Railway ست کن
 recorder:
   db_url: !secret recorder_db_url
   commit_interval: 1
   auto_purge: true
   purge_keep_days: 7
-
-# نمونه MQTT (اختیاری، اگر بروکر ابری داری)
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_user
-  password: !secret mqtt_pass
-
-# نمونه Automation ساده برای تست
-automation:
-  - alias: "Test Light Toggle"
-    trigger:
-      platform: time
-      at: "21:00:00"
-    action:
-      service: light.toggle
-      target:
-        entity_id: light.test_light
